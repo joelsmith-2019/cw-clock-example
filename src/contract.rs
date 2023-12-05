@@ -24,6 +24,11 @@ pub fn instantiate(
     Ok(Response::new().add_attribute("method", "instantiate"))
 }
 
+#[cfg_attr(not(feature = "library"), entry_point)]
+pub fn migrate(_deps: DepsMut, _env: Env, _msg: InstantiateMsg) -> Result<Response, ContractError> {
+    Ok(Response::default())
+}
+
 fn increment(deps: DepsMut) -> Result<(), ContractError> {
     let mut config = CONFIG.load(deps.storage)?;
     config.val += 1;
