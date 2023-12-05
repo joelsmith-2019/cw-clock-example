@@ -4,7 +4,7 @@ use cosmwasm_std::{to_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response,
 use cw2::set_contract_version;
 
 use crate::error::ContractError;
-use crate::msg::{ExecuteMsg, InstantiateMsg, QueryMsg, SudoMsg};
+use crate::msg::{ExecuteMsg, InstantiateMsg, QueryMsg};
 use crate::state::{Config, CONFIG};
 
 const CONTRACT_NAME: &str = "crates.io:cw-ibc-example";
@@ -40,17 +40,6 @@ pub fn execute(
 ) -> Result<Response, ContractError> {
     match msg {
         ExecuteMsg::Increment {} => {
-            increment(deps)?;
-            Ok(Response::new())
-        }
-    }
-}
-
-// sudo msg
-#[cfg_attr(not(feature = "library"), entry_point)]
-pub fn sudo(deps: DepsMut, _env: Env, msg: SudoMsg) -> Result<Response, ContractError> {
-    match msg {
-        SudoMsg::ClockEndBlock {} => {
             increment(deps)?;
             Ok(Response::new())
         }

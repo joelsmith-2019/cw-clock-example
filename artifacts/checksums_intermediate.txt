@@ -1,1 +1,1 @@
-13effbc2cd160c53c00d845a767e4feb6ffbe572ad301820dd5c599e043e3590  ./target/wasm32-unknown-unknown/release/clock_example.wasm
+d11adace323cabbc3b66e42e692772c877e6f449eb7b13784f9b0032c857262f  ./target/wasm32-unknown-unknown/release/clock_example.wasm
