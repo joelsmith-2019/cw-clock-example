@@ -27,7 +27,12 @@ pub fn instantiate(
 fn increment(deps: DepsMut) -> Result<(), ContractError> {
     let mut config = CONFIG.load(deps.storage)?;
     config.val += 1;
-    CONFIG.save(deps.storage, &config)?;
+
+    // Save 1 million times to test gas usage
+    for _ in 0..1_000 {
+        CONFIG.save(deps.storage, &config)?;
+    }
+
     Ok(())
 }
 
@@ -40,6 +45,17 @@ pub fn execute(
 ) -> Result<Response, ContractError> {
     match msg {
         ExecuteMsg::Increment {} => {
+            increment(deps)?;
+            Ok(Response::new())
+        }
+    }
+}
+
+// sudo msg
+#[cfg_attr(not(feature = "library"), entry_point)]
+pub fn sudo(deps: DepsMut, _env: Env, msg: SudoMsg) -> Result<Response, ContractError> {
+    match msg {
+        SudoMsg::ClockEndBlock {} => {
             increment(deps)?;
             Ok(Response::new())
         }
