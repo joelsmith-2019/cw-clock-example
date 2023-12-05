@@ -46,17 +46,6 @@ pub fn execute(
     }
 }
 
-// sudo msg
-#[cfg_attr(not(feature = "library"), entry_point)]
-pub fn sudo(deps: DepsMut, _env: Env, msg: SudoMsg) -> Result<Response, ContractError> {
-    match msg {
-        SudoMsg::ClockEndBlock {} => {
-            increment(deps)?;
-            Ok(Response::new())
-        }
-    }
-}
-
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
     match msg {
